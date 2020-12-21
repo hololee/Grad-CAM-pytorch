@@ -10,12 +10,13 @@ if __name__ == '__main__':
     # load resnet50. is pretrained on ImageNet.
     resnet = torchvision.models.resnet50(pretrained=True)
 
-    # gradcam(resnet, activation_layer = )
+    grad_cam = gradcam(resnet, activation_module='layer4', activation_sub_module='2')
 
-    # last conv layer is layer4.
-    print(list(resnet._modules))
+    # # last conv layer is layer4.
+    # print(list(resnet._modules))  # 'layer4'
+    #
+    # # layer4th last block is 2.
+    # print(list(resnet.layer4._modules))  # '2'
+    # last layer of resnet is Y
 
-    # layer4th last block is 2.
-    print(list(resnet.layer4._modules))
-
-
+    grad_cam.forward()
