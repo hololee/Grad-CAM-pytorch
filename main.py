@@ -28,7 +28,8 @@ if __name__ == '__main__':
     # load resnet50. is pretrained on ImageNet.
     resnet = torchvision.models.resnet50(pretrained=True)
 
-    grad_cam = gradcam(resnet, activation_module='layer4', activation_sub_module='2')
+    # grad_cam = gradcam(resnet, activation_module='layer4', activation_sub_module='2')
+    grad_cam = gradcam(resnet, activation_module='layer4')
 
     # # last conv layer is layer4.
     # print(list(resnet._modules))  # 'layer4'
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     # print(list(resnet.layer4._modules))  # '2'
     # last layer of resnet is Y
 
-    origin = imread('/data_ssd3/LJH/pytorch_project/Grad-CAM-pytorch/data/cat.jpg')
+    origin = imread('/data_ssd3/LJH/pytorch_project/Grad-CAM-pytorch/data/dog_cat.png')
     # normalize for pre-trained network.
     img = Normalize(origin.astype(np.float32))
 
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     img.requires_grad_(True)
 
     # forward.
-    grad_cam.forward(img)
+    grad_cam(img)
 
     # backward.
     grad_cam.backward()
